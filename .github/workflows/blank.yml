@@ -1,3 +1,4 @@
+
 name: Checkbox Workflow
 'on':
   workflow_dispatch:
@@ -12,15 +13,19 @@ name: Checkbox Workflow
           - qa
           - prod
       checkbox_1:
-        description: 'Kops Installation'
-        required: false
+        description: Terraform Nodes
+        required: true
         default: 'false'
       checkbox_2:
-        description: 'EFK Installation'
+        description: Kops Installation
         required: false
         default: 'false'
       checkbox_3:
-        description: 'Monitoring Installation'
+        description: EFK Installation
+        required: false
+        default: 'false'
+      checkbox_4:
+        description: Monitoring Installation
         required: false
         default: 'false'
 jobs:
@@ -32,18 +37,28 @@ jobs:
     steps:
       - name: Check out the repository
         uses: actions/checkout@v2
-        
-         if [ "${{ github.event.inputs.checkbox_1 }}" == "true" ]; then
-           echo "installation for Kops"
-           # Your command for Checkbox 2 goes here
-         fi
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.14.9
+      - name: Run workflow based on checkboxes and run commands
+        run: |
+          if [ "${{ github.event.inputs.checkbox_1 }}" == "true" ]; then
+            echo "creating nodes"
+            # Your commands for Checkbox 1 go here
+            
+          fi
 
-         if [ "${{ github.event.inputs.checkbox_2 }}" == "true" ]; then
-           echo "installation for EFK"
-           # Your command for Checkbox 3 goes here
-         fi
+          if [ "${{ github.event.inputs.checkbox_2 }}" == "true" ]; then
+            echo "installation for Kops"
+            # Your command for Checkbox 2 goes here
 
-         if [ "${{ github.event.inputs.checkbox_3 }}" == "true" ]; then
-           echo "installation for monitoring"
-           # Your command for Checkbox 4 goes here
-         fi
+          fi
+          if [ "${{ github.event.inputs.checkbox_3 }}" == "true" ]; then
+            echo "installation for EFK"
+            # Your command for Checkbox 3 goes here
+          fi
+          if [ "${{ github.event.inputs.checkbox_4 }}" == "true" ]; then
+            echo "installation for monitoring"
+            # Your command for Checkbox 4 goes here
+          fi 
