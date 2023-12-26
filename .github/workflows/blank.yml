@@ -33,7 +33,8 @@ jobs:
     steps:
       - name: Check out the repository
         uses: actions/checkout@v2
-        
+      - name: Run workflow based on checkboxes and run commands
+        run: | 
           if [ "${{ github.event.inputs.checkbox_2 }}" == "true" ]; then
             echo "installation for Kops"
             # Your command for Checkbox 2 goes here
