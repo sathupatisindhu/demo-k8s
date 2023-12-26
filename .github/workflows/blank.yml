@@ -52,7 +52,7 @@ jobs:
             # Your command for Checkbox 2 goes here
             
       - name: Install kops and AWS CLI
-        run: >
+        run: |
           wget
           https://github.com/kubernetes/kops/releases/download/v1.28.1/kops-linux-amd64
 
@@ -66,7 +66,7 @@ jobs:
 
           sudo apt-get update && sudo apt-get install -y awscli
       - name: Create S3 bucket
-        run: >
+        run: |
           aws s3api create-bucket --bucket kops-bucket-new-testing --region
           us-east-1
 
