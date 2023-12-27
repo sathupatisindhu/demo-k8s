@@ -53,13 +53,10 @@ jobs:
           which kops 
           kops version
           sudo apt-get update && sudo apt-get install -y awscli
-          aws s3api create-bucket --bucket kops-bucket-new-testing --region
-          us-west-2
+          aws s3api create-bucket --bucket kops-bucket-new-testing --region us-west-2
           aws s3 ls 
           aws s3 ls kops-bucket-new-testing
-          aws s3api put-bucket-versioning --bucket kops-bucket-new-testing
-          --region us-west-2 --versioning Status=Enabled
-
+          aws s3api put-bucket-versioning --bucket kops-bucket-new-testing --region us-west-2 --versioning Status=Enabled
           export KOPS_STATE_STORE=s3://kops-bucket-new-testing
 
 
