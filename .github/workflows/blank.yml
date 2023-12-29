@@ -61,19 +61,18 @@ jobs:
             terraform plan
             terraform apply --auto-approve
           fi
-      - name: Run workflow for kops installation
-        run: |
-          if [ "${{ github.event.inputs.checkbox_2 }}" == "true" ]; then
-            echo "installation for Kops"
-            # Your command for Checkbox 2 goes here
       - name: Set AWS credentials
         run: |
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws configure set default.region us-east-1
-      - name: Display S3 bucket contents
+          
+      - name: Run workflow for kops installation
         run: |
-          aws s3 ls $KOPS_STATE_STORE
+          if [ "${{ github.event.inputs.checkbox_2 }}" == "true" ]; then
+            echo "installation for Kops"
+            # Your command for Checkbox 2 goes here
+
       - name: Generate SSH key
         run: |
           echo "$SSH_PRIVATE_KEY" > id_rsa
@@ -96,6 +95,7 @@ jobs:
               kops validate cluster --name \${KOPS_CLUSTER_NAME} --wait 10m
               kops get cluster
               kops export kubecfg --admin
+              aws s3 ls $KOPS_STATE_STORE
 
           fi
           if [ "${{ github.event.inputs.checkbox_3 }}" == "true" ]; then
