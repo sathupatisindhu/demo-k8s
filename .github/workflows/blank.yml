@@ -92,12 +92,12 @@ jobs:
               aws configure set default.region us-east-1  
               export KOPS_STATE_STORE=s3://k8s-bucket-sindhu
               export KOPS_CLUSTER_NAME=sindhu-cluster.sarathkumar.xyz
-              #kops create cluster --name=${KOPS_CLUSTER_NAME} --zones=us-east-1a --master-size=t2.large --node-size=t2.medium --kubernetes-version=1.27.8 --dns private
               # Assuming the cluster is already created and you're updating it
-              kops update cluster --name ${KOPS_CLUSTER_NAME} --yes
-              kops validate cluster --name ${KOPS_CLUSTER_NAME} --wait 10m
+              kops update cluster --name \${KOPS_CLUSTER_NAME} --yes
+              kops validate cluster --name \${KOPS_CLUSTER_NAME} --wait 10m
               kops get cluster
               kops export kubecfg --admin
+            EOF
           fi
           if [ "${{ github.event.inputs.checkbox_3 }}" == "true" ]; then
             echo "installation for EFK"
@@ -107,3 +107,4 @@ jobs:
             echo "installation for monitoring"
             # Your command for Checkbox 4 goes here
           fi
+
