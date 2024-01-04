@@ -37,8 +37,8 @@ jobs:
       #AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       #AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       SECRET_AZURE_PEM_KEY: ${{ secrets.SECRET_AZURE_PEM_KEY }}
-      #IP_1: ${{ secrets.PUBLIC_IP_1 }} 
-      IP_2: ${{ secrets.PUBLIC_IP_2 }}
+      IP_1: ${{ secrets.PUBLIC_IP_1 }} 
+      #IP_2: ${{ secrets.PUBLIC_IP_2 }}
       
     steps:
       - name: Check out the repository
