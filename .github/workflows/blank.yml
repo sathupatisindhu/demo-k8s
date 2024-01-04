@@ -85,6 +85,7 @@ jobs:
            ls -lrt        
            ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no azureuser@20.192.7.3 "
                pwd
+               sudo su
                cd terraform
                ls -lrt
                bash ./common.sh
