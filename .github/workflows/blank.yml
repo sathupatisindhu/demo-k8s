@@ -37,8 +37,8 @@ jobs:
       #AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       #AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       SECRET_AZURE_PEM_KEY: ${{ secrets.SECRET_AZURE_PEM_KEY }}
-      IP_1: ${{ secrets.PUBLIC_IP_1 }} 
-      #IP_2: ${{ secrets.PUBLIC_IP_2 }}
+      #IP_1: ${{ secrets.PUBLIC_IP_1 }} 
+      IP_2: ${{ secrets.PUBLIC_IP_2 }}
       
     steps:
       - name: Check out the repository
@@ -78,19 +78,19 @@ jobs:
            echo "$SECRET_AZURE_PEM_KEY" >> $HOME/SECRET_AZURE_PEM_KEY
            pwd
            ls -lrt 
-           #ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no -A azureuser@4.240.121.118 "scp -r ./terraform azureuser@4.240.121.118:/home/azureuser"
-           #scp -r -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no ./terraform  azureuser@4.240.121.118:/home/azureuser
+           #ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no -A azureuser@20.235.106.199 "scp -r ./terraform azureuser@20.235.106.199:/home/azureuser"
+           #scp -r -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no ./terraform  azureuser@20.235.106.199:/home/azureuser
            ls -lrt
            chmod 400 $HOME/SECRET_AZURE_PEM_KEY
-           scp -o StrictHostKeyChecking=no -r -i $HOME/SECRET_AZURE_PEM_KEY ./terraform  azureuser@4.240.121.118:/home/azureuser
+           scp -o StrictHostKeyChecking=no -r -i $HOME/SECRET_AZURE_PEM_KEY ./terraform  azureuser@20.235.106.199:/home/azureuser
            ls -lrt        
-           ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no azureuser@4.240.121.118 "
+           ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no azureuser@20.235.106.199 "
                pwd
                sudo su
                cd terraform
                ls -lrt
                bash ./common.sh
-               bash ./master.sh
+               #bash ./master.sh
                wget https://github.com/kubernetes/kops/releases/download/v1.28.1/kops-linux-amd64
                sudo mv kops-linux-amd64 /usr/local/bin/kops
                sudo chmod +x /usr/local/bin/kops 
