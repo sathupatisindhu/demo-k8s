@@ -1,3 +1,4 @@
+
 name: Checkbox Workflow
 
 on:
@@ -33,10 +34,11 @@ jobs:
   run_workflow:
     runs-on: ubuntu-latest
     env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
+      #AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SECRET_AZURE_PEM_KEY: ${{ secrets.SECRET_AZURE_PEM_KEY }}
+      IP_1: ${{ secrets.PUBLIC_IP_1 }}   
+      
     steps:
       - name: Check out the repository
         uses: actions/checkout@v2
@@ -61,42 +63,37 @@ jobs:
             terraform plan
             terraform apply --auto-approve
           fi
-      - name: Set AWS credentials
-        run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set default.region us-east-1
-          
       - name: Run workflow for kops installation
         run: |
           if [ "${{ github.event.inputs.checkbox_2 }}" == "true" ]; then
             echo "installation for Kops"
             # Your command for Checkbox 2 goes here
-
-      - name: Generate SSH key
-        run: |
-          echo "$SSH_PRIVATE_KEY" > id_rsa
-          chmod 600 id_rsa
-      - name: Connect to server and install kops and aws cli
+          fi
+      - name: Setup key and install kops
+        env:
+           SECRET_AZURE_PEM_KEY: ${{ secrets.SECRET_AZURE_PEM_KEY }}
         run: |
           if [ "${{ github.event.inputs.checkbox_2 }}" == "true" ]; then
-            # Replace 'user' and '35.94.124.102' with your actual SSH user and server IP
-            ssh -i id_rsa user@35.94.124.102 << EOF
-              wget https://github.com/kubernetes/kops/releases/download/v1.28.1/kops-linux-amd64
-              sudo mv kops-linux-amd64 /usr/local/bin/kops
-              sudo chmod +x /usr/local/bin/kops 
-              kops version
-              aws --version
-              aws configure set default.region us-east-1  
-              export KOPS_STATE_STORE=s3://k8s-bucket-sindhu
-              export KOPS_CLUSTER_NAME=sindhu-cluster.sarathkumar.xyz
-              # Assuming the cluster is already created and you're updating it
-              kops update cluster --name \${KOPS_CLUSTER_NAME} --yes
-              kops validate cluster --name \${KOPS_CLUSTER_NAME} --wait 10m
-              kops get cluster
-              kops export kubecfg --admin
-              aws s3 ls $KOPS_STATE_STORE
-
+           echo "$SECRET_AZURE_PEM_KEY" >> $HOME/SECRET_AZURE_PEM_KEY
+           pwd
+           ls -lrt 
+           #ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no -A azureuser@98.70.89.114 "scp -r ./terraform azureuser@98.70.89.114:/home/azureuser"
+           #scp -r -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no ./terraform  azureuser@98.70.89.114:/home/azureuser
+           ls -lrt
+           chmod 400 $HOME/SECRET_AZURE_PEM_KEY
+           scp -o StrictHostKeyChecking=no -r -i $HOME/SECRET_AZURE_PEM_KEY ./terraform  azureuser@98.70.89.114:/home/azureuser
+           ls -lrt        
+           ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no azureuser@98.70.89.114 "
+               pwd
+               cd terraform
+               ls -lrt
+               bash ./common.sh
+               bash ./master.sh
+               wget https://github.com/kubernetes/kops/releases/download/v1.28.1/kops-linux-amd64
+               sudo mv kops-linux-amd64 /usr/local/bin/kops
+               sudo chmod +x /usr/local/bin/kops 
+               which kops 
+               kops version"
           fi
           if [ "${{ github.event.inputs.checkbox_3 }}" == "true" ]; then
             echo "installation for EFK"
@@ -106,4 +103,3 @@ jobs:
             echo "installation for monitoring"
             # Your command for Checkbox 4 goes here
           fi
-
