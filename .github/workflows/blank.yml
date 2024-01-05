@@ -34,11 +34,10 @@ jobs:
   run_workflow:
     runs-on: ubuntu-latest
     env:
-      #AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       SECRET_AZURE_PEM_KEY: ${{ secrets.SECRET_AZURE_PEM_KEY }}
-      IP_1: ${{ secrets.PUBLIC_IP_1 }} 
+      #IP_1: ${{ secrets.PUBLIC_IP_1 }} 
       #IP_2: ${{ secrets.PUBLIC_IP_2 }}
+      IP_3: ${{ secrets.PUBLIC_IP_3 }}
       
     steps:
       - name: Check out the repository
@@ -77,12 +76,12 @@ jobs:
           if [ "${{ github.event.inputs.checkbox_2 }}" == "true" ]; then
            echo "$SECRET_AZURE_PEM_KEY" >> $HOME/SECRET_AZURE_PEM_KEY
            pwd
-           ls -lrt 
-           #ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no -A azureuser@4.188.243.158 "scp -r ./terraform azureuser@4.188.243.158home/azureuser"
-           #scp -r -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no ./terraform  azureuser@4.188.243.158:/home/azureuser
            ls -lrt
            chmod 400 $HOME/SECRET_AZURE_PEM_KEY
-           scp -o StrictHostKeyChecking=no -r -i $HOME/SECRET_AZURE_PEM_KEY ./terraform  azureuser@4.188.243.158:/home/azureuser
+           #scp -o StrictHostKeyChecking=no -r -i $HOME/SECRET_AZURE_PEM_KEY ./terraform  azureuser@4.240.121.118:/home/azureuser
+           #scp -o StrictHostKeyChecking=no -i $HOME/SECRET_AZURE_PEM_KEY ./terraform/common.sh  azureuser@20.235.106.199:/home/azureuser
+           scp -o StrictHostKeyChecking=no -i $HOME/SECRET_AZURE_PEM_KEY ./terraform/common.sh  azureuser@4.188.243.158:/home/azureuser
+
            ls -lrt        
            ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no azureuser@4.188.243.158 "
                pwd
