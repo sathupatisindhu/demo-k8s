@@ -83,7 +83,10 @@ jobs:
            #scp -o StrictHostKeyChecking=no -i $HOME/SECRET_AZURE_PEM_KEY ./terraform/common.sh  azureuser@4.188.243.158:/home/azureuser
 
            ls -lrt        
-           ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no azureuser@4.188.243.158 "
+           ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no azureuser@4.240.121.118"
+           #ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no azureuser@20.235.106.199 "
+           #ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no azureuser@4.188.243.158 "
+
                pwd
                sudo su
                cd terraform
@@ -99,7 +102,7 @@ jobs:
           if [ "${{ github.event.inputs.checkbox_3 }}" == "true" ]; then
             echo "installation for EFK"
             # Your command for Checkbox 3 goes here
-            ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no azureuser@4.240.121.118 "
+            #ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no azureuser@4.240.121.118 "
             pwd
             sudo su
             cd efk
