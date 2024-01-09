@@ -97,9 +97,12 @@ jobs:
           if [ "${{ github.event.inputs.checkbox_3 }}" == "true" ]; then
             echo "installation for EFK"
             # Your command for Checkbox 3 goes here
+            
             ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no azureuser@4.240.121.118 "
                pwd
                sudo su
+               git clone https://github.com/sathupatisindhu/demo-k8s.git
+               cd demo-k8s
                cd efk
                ls -lrt
                kubectl apply -f .
