@@ -106,8 +106,8 @@ jobs:
                cd efk
                ls -lrt
                kubectl apply -f .
-               kubectl get pods "
-               #kubectl port-forward <kibana-7cd94c49b8-ld2cv> 5601:5601 -n default
+               kubectl get pods 
+               kubectl port-forward kibana-84996cdb9b-62t6f 5601:5601 -n default "
             
           fi
           if [ "${{ github.event.inputs.checkbox_4 }}" == "true" ]; then
