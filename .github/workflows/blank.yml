@@ -100,7 +100,7 @@ jobs:
             ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no azureuser@4.240.121.118 "
                pwd
                sudo su
-               cd efk
+               #cd efk
                ls -lrt
                kubectl apply -f .
                kubectl get pods "
