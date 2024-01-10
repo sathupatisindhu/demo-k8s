@@ -26,7 +26,7 @@ on:
         default: 'false'
       checkbox_4:
         description: Monitoring Installation
-        required: false
+        required: true
         default: 'false'
 
 jobs:
@@ -113,4 +113,14 @@ jobs:
           if [ "${{ github.event.inputs.checkbox_4 }}" == "true" ]; then
             echo "installation for monitoring"
             # Your command for Checkbox 4 goes here
+            ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no azureuser@4.240.121.118 "
+               pwd
+               sudo su
+               curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+               apt-get install apt-transport-https --yes
+               echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.listsudo apt-get install helm
+               apt-get update
+               apt-get install helm
+               helm version"  
+            
           fi
