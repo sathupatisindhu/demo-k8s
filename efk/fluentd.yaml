@@ -320,7 +320,7 @@ spec:
       serviceAccountName: fluentd
       containers:
       - name: fluentd-elasticsearch
-        image: fluent/fluentd-kubernetes-daemonset:v1-debian-elasticsearch
+        image: fluent/fluentd-kubernetes-daemonset:v1-debian-elasticsearch8
         env:
         - name:  FLUENT_ELASTICSEARCH_HOST
           value: "elasticsearch-master"
