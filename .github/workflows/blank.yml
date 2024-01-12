@@ -116,11 +116,20 @@ jobs:
             ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no azureuser@4.240.121.118 "
                pwd
                sudo su
-               curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
-               sudo apt-get install apt-transport-https --yes
-               echo "deb [arch=amd64 signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
-               sudo apt-get update
-               sudo apt-get install helm
-               helm version "
+               # curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+               # sudo apt-get install apt-transport-https --yes
+               # echo "deb [arch=amd64 signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+               # sudo apt-get update
+               # sudo apt-get install helm
+               # helm version 
+
+               #Prometheus installation using helm repo 
+               sudo helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+               sudo helm repo add stable https://charts.helm.sh/stable
+               sudo helm repo update
+               sudo helm install prometheus prometheus-community/prometheus
+               sudo kubectl get pods
+               sudo kubectl get svc "
+               #sudo kubectl port-forward svc/prometheus-server 3000:80
             
           fi
