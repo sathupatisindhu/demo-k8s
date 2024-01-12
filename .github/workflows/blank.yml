@@ -136,7 +136,7 @@ jobs:
                helm repo add grafana https://grafana.github.io/helm-charts
                helm install grafana grafana/grafana 
                kubectl get pods "
-               #kubectl port-forward service/grafana 3001:80
+               #kubectl port-forward service/grafana 3001:80 
                #kubectl expose service grafana -- type=NodePort -- target-port=3000 -- name=grafana-ext
 
         
