@@ -126,9 +126,9 @@ jobs:
                helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
                helm repo add stable https://charts.helm.sh/stable
                helm repo update
-               helm install prometheus prometheus-community/prometheus "
-               #sudo kubectl get pods "
-               #sudo kubectl get svc 
+               helm install prometheus prometheus-community/prometheus 
+               kubectl get pods 
+               kubectl get svc "
                #sudo kubectl port-forward svc/prometheus-server 3000:80
             
           fi
