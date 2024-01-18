@@ -77,9 +77,9 @@ jobs:
            pwd
            ls -lrt
            chmod 400 $HOME/SECRET_AZURE_PEM_KEY
-           scp -o StrictHostKeyChecking=no -r -i $HOME/SECRET_AZURE_PEM_KEY ./terraform  azureuser@20.204.101.198:/home/azureuser
-           #scp -o StrictHostKeyChecking=no -i $HOME/SECRET_AZURE_PEM_KEY ./terraform/common.sh  azureuser@20.235.108.143:/home/azureuser
-           #scp -o StrictHostKeyChecking=no -i $HOME/SECRET_AZURE_PEM_KEY ./terraform/common.sh  azureuser@4.240.13.76:/home/azureuser
+           #scp -o StrictHostKeyChecking=no -r -i $HOME/SECRET_AZURE_PEM_KEY ./terraform  azureuser@20.204.101.198:/home/azureuser
+           scp -o StrictHostKeyChecking=no -i $HOME/SECRET_AZURE_PEM_KEY ./terraform/common.sh  azureuser@20.235.108.143:/home/azureuser
+           scp -o StrictHostKeyChecking=no -i $HOME/SECRET_AZURE_PEM_KEY ./terraform/common.sh  azureuser@4.240.13.76:/home/azureuser
            ls -lrt        
            ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no azureuser@20.204.101.198 "
                pwd
@@ -87,7 +87,7 @@ jobs:
                cd terraform
                ls -lrt
                bash ./common.sh
-               bash ./master.sh
+               #bash ./master.sh
                wget https://github.com/kubernetes/kops/releases/download/v1.28.1/kops-linux-amd64
                sudo mv kops-linux-amd64 /usr/local/bin/kops
                sudo chmod +x /usr/local/bin/kops 
