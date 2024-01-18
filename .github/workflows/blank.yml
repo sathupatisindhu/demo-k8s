@@ -79,9 +79,9 @@ jobs:
            chmod 400 $HOME/SECRET_AZURE_PEM_KEY
            #scp -o StrictHostKeyChecking=no -r -i $HOME/SECRET_AZURE_PEM_KEY ./terraform  azureuser@20.204.101.198:/home/azureuser
            scp -o StrictHostKeyChecking=no -i $HOME/SECRET_AZURE_PEM_KEY ./terraform/common.sh  azureuser@20.235.108.143:/home/azureuser
-           scp -o StrictHostKeyChecking=no -i $HOME/SECRET_AZURE_PEM_KEY ./terraform/common.sh  azureuser@4.240.13.76:/home/azureuser
+           #scp -o StrictHostKeyChecking=no -i $HOME/SECRET_AZURE_PEM_KEY ./terraform/common.sh  azureuser@4.240.13.76:/home/azureuser
            ls -lrt        
-           ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no azureuser@20.204.101.198 "
+           ssh -i $HOME/SECRET_AZURE_PEM_KEY -o StrictHostKeyChecking=no azureuser@20.235.108.143 "
                pwd
                sudo su
                cd terraform
